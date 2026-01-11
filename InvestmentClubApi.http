@@ -1,0 +1,6 @@
+@InvestmentClubAPI = http://localhost:5139
+
+GET {{InvestmentClubAPI}}/weatherforecast/
+Accept: application/json
+
+###

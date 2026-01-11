@@ -1,46 +1,104 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using MyMicroservice.Data;
-using MyMicroservice.Models;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using InvestmentClubAPI.src.UserAuth;
+using InvestmentClubAPI.src.AuditLog;
+using InvestmentClubAPI.src.UserProfile;
+using InvestmentClubAPI.src.Club;
+using InvestmentClubAPI.src.ClubMember;
+using InvestmentClubAPI.src.ClubWallet;
+using InvestmentClubAPI.src.UserWallet;
+using InvestmentClubAPI.src.Transaction;
+using InvestmentClubAPI.Data;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// PostgreSQL DbContext
+// Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-// Add Swagger services
+// JWT Authentication
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+
+
+builder.Services.AddScoped<AuditService>();
+builder.Services.AddAuthModule();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+builder.Services.AddAuthorization(); 
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Investment Club API",
+        Version = "v1"
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter: Bearer {your JWT token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 
 var app = builder.Build();
 
-// 🔹 Important: Swagger middleware comes BEFORE mapping endpoints
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();               // Serves JSON at /swagger/v1/swagger.json
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyMicroservice API V1");
-        c.RoutePrefix = "swagger"; // Default is 'swagger', can also be "" for root
-    });
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-// Optional root endpoint
-app.MapGet("/", () => "MyMicroservice API is running");
+app.MapGet("/", () => "Investment Club API is running");
 
-// Products endpoints
-app.MapGet("/products", async (AppDbContext db) =>
-{
-    return await db.Products.ToListAsync();
-});
+app.MapAuthEndpoints();
+// app.MapClubEndpoints();
+// app.MapWalletEndpoints();
+// app.MapTransactionEndpoints();
 
-app.MapPost("/products", async (Product product, AppDbContext db) =>
-{
-    db.Products.Add(product);
-    await db.SaveChangesAsync();
-    return Results.Created($"/products/{product.Id}", product);
-});
 
 app.Run();

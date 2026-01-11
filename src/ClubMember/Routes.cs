@@ -1,0 +1,1 @@
+namespace InvestmentClubAPI.src.ClubMember;

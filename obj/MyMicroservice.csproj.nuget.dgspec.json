@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\johnson\\Desktop\\ASP\\MyMicroservice\\MyMicroservice.csproj": {}
+    "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\MyMicroservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\johnson\\Desktop\\ASP\\MyMicroservice\\MyMicroservice.csproj": {
+    "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\MyMicroservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\johnson\\Desktop\\ASP\\MyMicroservice\\MyMicroservice.csproj",
+        "projectUniqueName": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\MyMicroservice.csproj",
         "projectName": "MyMicroservice",
-        "projectPath": "C:\\Users\\johnson\\Desktop\\ASP\\MyMicroservice\\MyMicroservice.csproj",
+        "projectPath": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\MyMicroservice.csproj",
         "packagesPath": "C:\\Users\\johnson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\johnson\\Desktop\\ASP\\MyMicroservice\\obj\\",
+        "outputPath": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\johnson\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.10, )"
@@ -71,6 +79,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.7.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.15.0, )"
             }
           },
           "imports": [
