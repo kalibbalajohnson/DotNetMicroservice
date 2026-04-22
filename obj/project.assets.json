@@ -3654,19 +3654,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\johnson\\.nuget\\packages\\": {}
+    "/home/bestill/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\InvestmentClubApi.csproj",
+      "projectUniqueName": "/home/bestill/Desktop/Investment-Club-API/InvestmentClubApi.csproj",
       "projectName": "InvestmentClubApi",
-      "projectPath": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\InvestmentClubApi.csproj",
-      "packagesPath": "C:\\Users\\johnson\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\johnson\\Desktop\\ASP\\InvestmentClubAPI\\obj\\",
+      "projectPath": "/home/bestill/Desktop/Investment-Club-API/InvestmentClubApi.csproj",
+      "packagesPath": "/home/bestill/.nuget/packages/",
+      "outputPath": "/home/bestill/Desktop/Investment-Club-API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\johnson\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/bestill/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3690,7 +3690,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -3756,7 +3756,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
